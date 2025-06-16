@@ -1,0 +1,121 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Models\Insight;
+use App\Models\Category;
+
+class AdminInsightController extends Controller
+{
+
+    public function index()
+    {
+        $insights = Insight::with('category')->orderByDesc('published_at')->paginate(15);
+
+        return view('admin.insights.index', compact('insights'));
+    }
+
+    public function create()
+    {
+        $categories = Category::all();
+        return view('admin.insights.create', compact('categories'));
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title'         => 'required|string|max:255',
+            'slug'          => 'nullable|string|unique:insights,slug',
+            'content'       => 'required|string',
+            'category_id'   => 'nullable|exists:categories,id',
+            'published_at'  => 'nullable|date',
+            'image'         => 'nullable|image|max:2048', // 2MB, jpg/png/webp etc.
+            'affiliate_url' => 'nullable|url',
+        ], [
+            'title.required'         => 'Titel er påkrævet.',
+            'title.max'              => 'Titlen må højst være 255 tegn.',
+            'slug.unique'            => 'Sluggen skal være unik.',
+            'content.required'       => 'Indhold er påkrævet.',
+            'category_id.exists'     => 'Vælg en gyldig kategori.',
+            'published_at.date'      => 'Publiceringsdatoen skal være en gyldig dato.',
+            'image.image'            => 'Den valgte fil skal være et billede.',
+            'image.max'              => 'Billedet må højst være 2MB.',
+            'affiliate_url.url'      => 'Affiliate-linket skal være en gyldig URL.',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $validatedData['image_url'] = $request->file('image')->store('insight-images', 'public');
+        }
+
+        // Automatisk slug hvis ikke angivet
+        if (empty($validatedData['slug'])) {
+            $validatedData['slug'] = Str::slug($validatedData['title']);
+        }
+
+        // Opret Insight
+        Insight::create($validatedData);
+
+        return redirect()
+            ->route('admin.insights.index')
+            ->with('success', 'Insight blev oprettet.');
+    }
+
+    public function edit(Insight $insight)
+    {
+        $categories = Category::all();
+        return view('admin.insights.edit', compact('insight', 'categories'));
+    }
+
+    public function update(Request $request, Insight $insight)
+    {
+        $validated = $request->validate([
+            'title'         => 'required|string|max:255',
+            'slug'          => 'nullable|string|unique:insights,slug,' . $insight->id,
+            'content'       => 'required|string',
+            'category_id'   => 'nullable|exists:categories,id',
+            'published_at'  => 'nullable|date',
+            'image'         => 'nullable|image|max:2048',
+            'affiliate_url' => 'nullable|url',
+        ], [
+            'title.required'         => 'Titel er påkrævet.',
+            'title.max'              => 'Titlen må højst være 255 tegn.',
+            'slug.unique'            => 'Sluggen skal være unik.',
+            'content.required'       => 'Indhold er påkrævet.',
+            'category_id.exists'     => 'Vælg en gyldig kategori.',
+            'published_at.date'      => 'Publiceringsdatoen skal være en gyldig dato.',
+            'image.image'            => 'Den valgte fil skal være et billede.',
+            'image.max'              => 'Billedet må højst være 2MB.',
+            'affiliate_url.url'      => 'Affiliate-linket skal være en gyldig URL.',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image_url'] = $request->file('image')->store('insight-images', 'public');
+        }
+
+        $validated['slug'] = $validated['slug'] ?? Str::slug($validated['title']);
+
+        $insight->update($validated);
+
+        return redirect()->route('admin.insights.index')->with('success', 'Indlægget er opdateret.');
+    }
+
+
+    public function destroy(Insight $insight)
+    {
+        $insight->delete();
+
+        // Check if request came from dashboard
+        if (request()->query('from') == 'dashboard') {
+            return redirect()
+                ->route('dashboard')
+                ->with('success', 'Insight blev slettet.');
+        }
+
+        return redirect()
+            ->route('admin.insights.index')
+            ->with('success', 'Insight blev slettet.');
+    }
+}
