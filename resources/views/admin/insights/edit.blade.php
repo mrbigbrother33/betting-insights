@@ -1,22 +1,53 @@
-<x-layout title="Rediger Insight">
-    <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
-        <h1 class="text-2xl font-bold mb-6">Rediger: {{ $insight->title }}</h1>
+<x-layout title="Rediger indlæg">
+    <div class="max-w-3xl mx-auto mt-10 bg-white p-6 rounded shadow border">
 
-        <form action="{{ route('admin.insights.update', $insight) }}" method="POST" class="space-y-4" enctype="multipart/form-data">
+        <h1 class="text-2xl font-bold text-indigo-700 mb-6">Rediger indlæg</h1>
+
+        {{-- Fjern billede form (udenfor hovedform) --}}
+        @if ($insight->image_url)
+            <div class="mb-6">
+                <p class="text-sm text-gray-500 mb-1">Nuværende billede:</p>
+                <img src="{{ asset('storage/' . $insight->image_url) }}" class="h-40 rounded shadow mb-2">
+
+                <form method="POST" action="{{ route('admin.insights.removeImage', $insight) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                            onclick="return confirm('Er du sikker på, at du vil fjerne billedet?')"
+                            class="inline-block text-red-600 hover:text-red-800 text-sm underline">
+                        Fjern billede
+                    </button>
+                </form>
+            </div>
+        @endif
+
+        {{-- Redigeringsform --}}
+        <form method="POST" action="{{ route('admin.insights.update', $insight) }}" enctype="multipart/form-data" class="space-y-5">
             @csrf
             @method('PUT')
 
-            <x-input label="Titel" name="title" :value="old('title', $insight->title)" required />
-
-            <x-input label="Slug" name="slug" :value="old('slug', $insight->slug)" />
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700">Titel</label>
+                <input type="text" name="title" id="title" value="{{ old('title', $insight->title) }}"
+                       class="w-full px-3 py-2 border bg-white border-gray-300 rounded shadow-sm text-sm">
+                @error('title') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
+            </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700">Kategori</label>
-                <select name="category_id" class="mt-1 w-full border rounded px-3 py-2">
-                    <option value="">-- Vælg kategori --</option>
+                <label for="slug" class="block text-sm font-medium text-gray-700">Slug (valgfri)</label>
+                <input type="text" name="slug" id="slug" value="{{ old('slug', $insight->slug) }}"
+                       class="w-full px-3 py-2 border bg-white border-gray-300 rounded shadow-sm text-sm">
+                @error('slug') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
+                <label for="category_id" class="block text-sm font-medium text-gray-700">Kategori</label>
+                <select name="category_id" id="category_id"
+                        class="w-full px-3 py-2 border bg-white border-gray-300 rounded shadow-sm text-sm">
+                    <option value="">Ingen</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}"
-                            @selected(old('category_id', $insight->category_id) == $category->id)>
+                                {{ old('category_id', $insight->category_id) == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
                         </option>
                     @endforeach
@@ -25,33 +56,44 @@
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700">Indhold</label>
-                <textarea name="content" rows="8" class="mt-1 w-full border rounded px-3 py-2">{{ old('content', $insight->content) }}</textarea>
+                <label for="published_at" class="block text-sm font-medium text-gray-700">Publiceringsdato</label>
+                <input type="date" name="published_at" id="published_at"
+                       value="{{ old('published_at', optional($insight->published_at)->format('Y-m-d')) }}"
+                       class="w-full px-3 py-2 border bg-white border-gray-300 rounded shadow-sm text-sm">
+                @error('published_at') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
+                <label for="affiliate_url" class="block text-sm font-medium text-gray-700">Affiliate-link</label>
+                <input type="url" name="affiliate_url" id="affiliate_url"
+                       value="{{ old('affiliate_url', $insight->affiliate_url) }}"
+                       class="w-full px-3 py-2 border bg-white border-gray-300 rounded shadow-sm text-sm">
+                @error('affiliate_url') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
+                <label for="image" class="block text-sm font-medium text-gray-700">Erstat billede</label>
+                <input type="file" name="image" id="image"
+                       class="w-full px-3 py-2 border border-gray-300 bg-white rounded shadow-sm text-sm">
+                @error('image') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
+                <label for="content" class="block text-sm font-medium text-gray-700">Indhold</label>
+                <textarea name="content" id="content" rows="10"
+                          class="w-full px-3 py-2 border bg-white border-gray-300 rounded shadow-sm text-sm">{{ old('content', $insight->content) }}</textarea>
                 @error('content') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
-            <div class="mt-4">
-        <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Erstat billede</label>
-        <input type="file" name="image" id="image"
-               class="w-full px-3 py-2 border border-gray-300 bg-white rounded shadow-sm text-sm">
-        @error('image')
-            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-        @enderror
+            <div class="flex justify-between items-center">
+                <x-back-button href="{{ route('admin.insights.index') }}" />
 
-        @if ($insight->image_url)
-            <p class="text-sm text-gray-500 mt-2">Nuværende billede:</p>
-            <img src="{{ asset('storage/' . $insight->image_url) }}" class="mt-1 h-40 rounded shadow">
-        @endif
-    </div>
-
-            <x-input label="Affiliate-link (URL)" name="affiliate_url" :value="old('affiliate_url', $insight->affiliate_url)" />
-
-            <x-input label="Publiceringsdato" name="published_at" type="date" :value="old('published_at', \Illuminate\Support\Str::substr($insight->published_at, 0, 10))" />
-
-            <button type="submit"
-                class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-500 transition">
-                Opdater Insight
-            </button>
+                <button type="submit"
+                        class="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-500 transition text-sm">
+                    Gem ændringer
+                </button>
+            </div>
         </form>
     </div>
 </x-layout>
+

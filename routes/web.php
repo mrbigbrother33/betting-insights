@@ -44,3 +44,7 @@ Route::get('/mine-favoritter', [LikeController::class, 'index'])
 Route::post('/insights/{insight}/like', [LikeController::class, 'toggle'])
     ->middleware('auth')
     ->name('insights.like');
+
+Route::delete('/admin/insights/{insight}/remove-image', [AdminInsightController::class, 'removeImage'])
+    ->name('admin.insights.removeImage')
+    ->middleware(['auth', 'admin']);

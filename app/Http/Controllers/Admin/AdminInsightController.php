@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Insight;
 use App\Models\Category;
 
@@ -117,5 +118,16 @@ class AdminInsightController extends Controller
         return redirect()
             ->route('admin.insights.index')
             ->with('success', 'Insight blev slettet.');
+    }
+
+    public function removeImage(Insight $insight)
+    {
+        if ($insight->image_url && Storage::disk('public')->exists($insight->image_url)) {
+            Storage::disk('public')->delete($insight->image_url);
+        }
+
+        $insight->update(['image_url' => null]);
+
+        return back()->with('success', 'Billedet er fjernet.');
     }
 }
