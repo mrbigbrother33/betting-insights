@@ -22,11 +22,24 @@
                 @error('category_id') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
-            <div>
+            {{-- <div>
                 <label class="block text-sm font-medium text-gray-700">Indhold</label>
                 <textarea name="content" rows="8" class="mt-1 w-full border rounded px-3 py-2">{{ old('content') }}</textarea>
                 @error('content') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
-            </div>
+            </div> --}}
+
+<div>
+    <label for="content" class="block text-sm font-medium text-gray-700">Indhold</label>
+    
+    <input id="content" type="hidden" name="content" value="{{ old('content', $insight->content ?? '') }}">
+    <trix-editor input="content" class="mt-1 bg-white border border-gray-300 rounded shadow-sm"></trix-editor>
+
+    @error('content')
+        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+    @enderror
+</div>
+
+
 
             <div>
     <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Upload billede</label>

@@ -35,20 +35,24 @@
 
             <div class="prose prose-indigo max-w-none mb-6">
     @auth
-        {!! nl2br(e($insight->content)) !!}
+     <div class="prose max-w-none">
+    {!! $insight->content !!}
+</div>
     @else
-        {!! nl2br(e(Str::limit($insight->content, 500))) !!}
-        <div class="mt-4 bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm p-4 rounded">
-            <p class="font-medium mb-2">Vil du læse hele indlægget?</p>
-            <a href="{{ route('register') }}" class="inline-block text-indigo-600 underline hover:text-indigo-800">
-                Opret en gratis bruger
-            </a>
-            eller
-            <a href="{{ route('login') }}" class="text-indigo-600 underline hover:text-indigo-800">
-                log ind her
-            </a>
-            for at få adgang til hele indholdet.
-        </div>
+        {!! Str::limit($insight->content, 500) !!}
+
+<div class="mt-4 bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm p-4 rounded">
+    <p class="font-medium mb-2">Vil du læse hele indlægget?</p>
+    <a href="{{ route('register') }}" class="inline-block text-indigo-600 underline hover:text-indigo-800">
+        Opret en gratis bruger
+    </a>
+    eller
+    <a href="{{ route('login') }}" class="text-indigo-600 underline hover:text-indigo-800">
+        log ind her
+    </a>
+    for at få adgang til hele indholdet.
+</div>
+
     @endauth
 </div>
 

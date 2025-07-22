@@ -26,7 +26,7 @@
         </p>
 
         <p class="text-gray-700 text-sm leading-relaxed">
-            {{ Str::limit($insight->content, 100) }}
+            {!! Str::limit($insight->content, 300) !!}
         </p>
 
         <x-like-button :insight="$insight" />

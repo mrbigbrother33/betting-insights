@@ -78,12 +78,17 @@
                 @error('image') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
-            <div>
-                <label for="content" class="block text-sm font-medium text-gray-700">Indhold</label>
-                <textarea name="content" id="content" rows="10"
-                          class="w-full px-3 py-2 border bg-white border-gray-300 rounded shadow-sm text-sm">{{ old('content', $insight->content) }}</textarea>
-                @error('content') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
-            </div>
+<div>
+    <label for="content" class="block text-sm font-medium text-gray-700">Indhold</label>
+    
+    <input id="content" type="hidden" name="content" value="{{ old('content', $insight->content ?? '') }}">
+    <trix-editor input="content" class="mt-1 bg-white border border-gray-300 rounded shadow-sm"></trix-editor>
+
+    @error('content')
+        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+    @enderror
+</div>
+
 
             <div class="flex justify-between items-center">
                 <x-back-button href="{{ route('admin.insights.index') }}" />
