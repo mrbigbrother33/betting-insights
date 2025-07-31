@@ -72,13 +72,14 @@ class AdminInsightController extends Controller
 
     public function update(Request $request, Insight $insight)
     {
+
         $validated = $request->validate([
             'title'         => 'required|string|max:255',
             'slug'          => 'nullable|string|unique:insights,slug,' . $insight->id,
             'content'       => 'required|string',
             'category_id'   => 'nullable|exists:categories,id',
             'published_at'  => 'nullable|date',
-            'image'         => 'nullable|image|max:2048',
+            'image'         => 'nullable|image|max:5120',
             'affiliate_url' => 'nullable|url',
         ], [
             'title.required'         => 'Titel er påkrævet.',
@@ -88,7 +89,7 @@ class AdminInsightController extends Controller
             'category_id.exists'     => 'Vælg en gyldig kategori.',
             'published_at.date'      => 'Publiceringsdatoen skal være en gyldig dato.',
             'image.image'            => 'Den valgte fil skal være et billede.',
-            'image.max'              => 'Billedet må højst være 2MB.',
+            'image.max'              => 'Billedet må højst være 5MB.',
             'affiliate_url.url'      => 'Affiliate-linket skal være en gyldig URL.',
         ]);
 
