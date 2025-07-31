@@ -6,9 +6,9 @@
         <div class="text-center md:text-left">
             <h1 class="text-4xl font-bold text-indigo-700 mb-4">Byg passiv indtægt. Lev med frihed.</h1>
             <p class="text-lg text-gray-700 max-w-xl leading-relaxed">
-               Jeg hedder <strong>Morten</strong>, og jeg hjælper mennesker med at skabe økonomisk ro, få mere frihed i hverdagen og slippe for den konstante jagt på penge.
+               Jeg hedder <strong>Morten</strong>, og investering og trading er min store hobby.
 <br><br>
-Her deler jeg mine egne indsigter i investering, trading og betting – og dokumenterer rejsen mod et liv med mere overskud, frihed og færre kompromiser.
+På siden her deler jeg mine egne erfaringer og indsigter – ikke som rådgivning, men som inspiration fra min personlige rejse mod mere frihed, økonomisk overskud og færre kompromiser i hverdagen.
             </p>
         </div>
     </div>

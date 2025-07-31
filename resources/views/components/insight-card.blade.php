@@ -1,10 +1,11 @@
-<div class="bg-white shadow-sm border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition">
+<div class="flex flex-col h-full bg-white border border-gray-200 rounded-lg shadow hover:shadow-md transition overflow-hidden">
+
+    {{-- Billede eller ikon --}}
     @if ($insight->image_url)
-              <img src="{{ asset('storage/' . $insight->image_url) }}" alt="Billede"
-         class="w-full h-40 object-cover">
+        <img src="{{ asset('storage/' . $insight->image_url) }}" alt="Billede"
+             class="w-full h-40 object-cover">
     @else
         <div class="w-full h-40 bg-indigo-50 flex items-center justify-center text-indigo-400">
-            <!-- Heroicon: Lightbulb -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24"
                  stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -13,24 +14,25 @@
         </div>
     @endif
 
-    <div class="p-4">
-        <h2 class="text-lg font-semibold mb-1">
-            <a href="{{ route('insights.show', $insight) }}" class="text-indigo-600 hover:underline">
-                {{ $insight->title }}
-            </a>
+    {{-- Indhold --}}
+    <div class="p-4 flex flex-col flex-grow">
+        <h2 class="text-lg font-bold text-indigo-600 hover:underline mb-1">
+            <a href="{{ route('insights.show', $insight) }}">{{ $insight->title }}</a>
         </h2>
 
         <p class="text-sm text-gray-500 mb-2">
-            {{ $insight->published_at?->format('d. M Y') ?? 'Ikke publiceret' }} –
+            {{ $insight->published_at?->format('d. M Y') ?? 'Ikke publiceret' }} – 
             {{ $insight->category->name ?? 'Ingen kategori' }}
         </p>
 
-        <p class="text-gray-700 text-sm leading-relaxed">
-            {!! Str::limit($insight->content, 300) !!}
-        </p>
+        <div class="text-gray-700 text-sm leading-relaxed mb-4">
+            {!! Str::limit(strip_tags($insight->content), 200) !!}
+        </div>
 
-        <x-like-button :insight="$insight" />
+        {{-- Like-knap helt i bunden --}}
+        <div class="mt-auto pt-2">
+            <x-like-button :insight="$insight" />
+        </div>
     </div>
-    
 
 </div>

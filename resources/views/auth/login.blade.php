@@ -1,8 +1,6 @@
 <x-layout title="Login">
     <div class="max-w-md mx-auto mt-16 bg-white p-6 rounded-lg shadow border">
 
-<x-back-button href="{{ route('home') }}" />
-
         <h1 class="text-2xl font-bold mb-4 text-center">Log ind</h1>
 
         @if(session('error'))

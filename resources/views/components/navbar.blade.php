@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-white shadow-sm border-b border-gray-200 p-4">
     <div class="flex justify-between items-center max-w-7xl mx-auto">
-        <a href="/" class="text-xl font-bold text-indigo-600 tracking-tight">InsightEdge</a>
+        <a href="/" class="text-xl font-bold text-indigo-600 tracking-tight">FriIndsigt</a>
 
         <!-- Desktop nav -->
         <div class="hidden md:flex space-x-6 text-sm font-medium items-center">
