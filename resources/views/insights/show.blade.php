@@ -10,6 +10,7 @@
         <div class="p-6">
             {{-- Rediger / slet --}}
             @auth
+            @if(auth()->user()->is_admin)
                 <div class="flex justify-end gap-3 mb-4">
                     <a href="{{ route('admin.insights.edit', $insight) }}" class="inline-flex items-center gap-1 text-sm bg-indigo-600 text-white px-3 py-1.5 rounded hover:bg-indigo-500 transition">
                         ✏️ Rediger
@@ -24,6 +25,7 @@
                         </button>
                     </form>
                 </div>
+                @endif
             @endauth
 
             <h1 class="text-3xl font-bold mb-2 text-indigo-700">{{ $insight->title }}</h1>

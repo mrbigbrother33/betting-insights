@@ -3,7 +3,7 @@
     {{-- Billede eller ikon --}}
     @if ($insight->image_url)
         <img src="{{ asset('storage/' . $insight->image_url) }}" alt="Billede"
-             class="w-full h-40 object-cover">
+             class="w-full h-64 object-cover">
     @else
         <div class="w-full h-40 bg-indigo-50 flex items-center justify-center text-indigo-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24"
