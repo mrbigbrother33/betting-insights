@@ -33,9 +33,9 @@ class AdminInsightController extends Controller
             'title'         => 'required|string|max:255',
             'slug'          => 'nullable|string|unique:insights,slug',
             'content'       => 'required|string',
-            'category_id'   => 'nullable|exists:categories,id',
+            'category_id'   => 'required|exists:categories,id',
             'published_at'  => 'nullable|date',
-            'image'         => 'nullable|image|max:2048', // 2MB, jpg/png/webp etc.
+            'image'         => 'nullable|image|max:5120', // 5MB, jpg/png/webp etc.
             'affiliate_url' => 'nullable|url',
         ], [
             'title.required'         => 'Titel er påkrævet.',
@@ -43,9 +43,10 @@ class AdminInsightController extends Controller
             'slug.unique'            => 'Sluggen skal være unik.',
             'content.required'       => 'Indhold er påkrævet.',
             'category_id.exists'     => 'Vælg en gyldig kategori.',
+            'category_id.required' => 'Du skal vælge en kategori.',
             'published_at.date'      => 'Publiceringsdatoen skal være en gyldig dato.',
             'image.image'            => 'Den valgte fil skal være et billede.',
-            'image.max'              => 'Billedet må højst være 2MB.',
+            'image.max'              => 'Billedet må højst være 5MB.',
             'affiliate_url.url'      => 'Affiliate-linket skal være en gyldig URL.',
         ]);
 
@@ -79,7 +80,7 @@ class AdminInsightController extends Controller
             'title'         => 'required|string|max:255',
             'slug'          => 'nullable|string|unique:insights,slug,' . $insight->id,
             'content'       => 'required|string',
-            'category_id'   => 'nullable|exists:categories,id',
+            'category_id'   => 'required|exists:categories,id',
             'published_at'  => 'nullable|date',
             'image'         => 'nullable|image|max:5120',
             'affiliate_url' => 'nullable|url',
@@ -89,6 +90,7 @@ class AdminInsightController extends Controller
             'slug.unique'            => 'Sluggen skal være unik.',
             'content.required'       => 'Indhold er påkrævet.',
             'category_id.exists'     => 'Vælg en gyldig kategori.',
+            'category_id.required' => 'Du skal vælge en kategori.',
             'published_at.date'      => 'Publiceringsdatoen skal være en gyldig dato.',
             'image.image'            => 'Den valgte fil skal være et billede.',
             'image.max'              => 'Billedet må højst være 5MB.',
