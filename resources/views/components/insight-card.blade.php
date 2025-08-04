@@ -26,7 +26,7 @@
         </p>
 
         <div class="text-gray-700 text-sm leading-relaxed mb-4">
-            {!! Str::limit(strip_tags($insight->content), 200) !!}
+            {!! Str::limit(strip_tags($insight->content, '<strong><em><ul><ol><li><br><b><i>'), 200) !!}
         </div>
 
         {{-- Like-knap helt i bunden --}}
