@@ -1,4 +1,7 @@
-<x-layout :title="$insight->title">
+<x-layout :title="$insight->title"
+    :metaTitle="$insight->title"
+    :metaDescription="Str::limit(strip_tags($insight->content), 150)"
+    :metaImage="$insight->image_url ? asset('storage/' . $insight->image_url) : asset('default-og-image.jpg')">
     <article class="max-w-3xl mx-auto bg-white shadow-sm border border-gray-200 rounded-lg overflow-hidden">
 
     

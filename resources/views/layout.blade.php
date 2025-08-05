@@ -1,9 +1,21 @@
+@props([
+    'title' => 'FriIndsigt',
+    'metaTitle' => null,
+    'metaDescription' => null,
+    'metaImage' => null,
+])
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{{ $title ?? 'Insights' }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Open Graph -->
+<meta property="og:title" content="{{ $metaTitle ?? $title ?? config('app.name') }}" />
+<meta property="og:description" content="{{ $metaDescription ?? 'Læs indsigtsfulde artikler om investering, frihed og personlig udvikling.' }}" />
+<meta property="og:image" content="{{ $metaImage ?? asset('default-og-image.jpg') }}" />
+<meta property="og:url" content="{{ url()->current() }}" />
+<meta property="og:type" content="article" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-pB6UoF..." crossorigin="anonymous" referrerpolicy="no-referrer" />
