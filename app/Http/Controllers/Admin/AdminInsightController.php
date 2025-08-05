@@ -8,8 +8,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Insight;
 use App\Models\Category;
-use Intervention\Image\ImageManagerStatic as Image;
-
 
 class AdminInsightController extends Controller
 {
@@ -98,20 +96,7 @@ class AdminInsightController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
-
-            // Resize til fx maks bredde 1200px, bevar aspektforhold
-            $resized = Image::make($image)
-                ->resize(1200, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize(); // Forhindrer forstørrelse af små billeder
-                })
-                ->encode();
-
-            Storage::disk('public')->put("insight-images/{$filename}", $resized);
-
-            $validated['image_url'] = "insight-images/{$filename}";
+            $validated['image_url'] = $request->file('image')->store('insight-images', 'public');
         }
 
         $validated['slug'] = $validated['slug'] ?? Str::slug($validated['title']);
