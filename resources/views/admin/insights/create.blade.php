@@ -23,9 +23,13 @@
             </div>
 
 <div>
-    <label for="content" class="block text-sm font-medium text-gray-700">Indhold</label>
     
-    <input id="content" type="hidden" name="content" value="{{ old('content', $insight->content ?? '') }}">
+   <div class="mb-4">
+    <label for="editor" class="block font-medium mb-1">Indhold</label>
+    <textarea id="editor" name="content" class="w-full border border-gray-300 rounded px-3 py-2" rows="10">
+        {{ old('content', $insight->content ?? '') }}
+    </textarea>
+</div>
 
     @error('content')
         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
@@ -51,4 +55,20 @@
             </button>
         </form>
     </div>
+
+    @push('scripts')
+    <script src="https://cdn.tiny.cloud/1/bqf076c9czpv7mfk5pel6qojf5dzh474lrd8q506yjm711kh/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            tinymce.init({
+                selector: '#editor',
+                plugins: 'link image media code lists',
+                toolbar: 'undo redo | bold italic | bullist numlist | link image media | code',
+                height: 400,
+                menubar: false,
+                branding: false,
+            });
+        });
+    </script>
+@endpush
 </x-layout>
