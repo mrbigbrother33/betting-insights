@@ -67,6 +67,9 @@
                 height: 400,
                 menubar: false,
                 branding: false,
+                forced_root_block: "p", // <- Sørg for at Enter giver <p>
+                force_br_newlines: false,
+                force_p_newlines: true,
             });
         });
     </script>
