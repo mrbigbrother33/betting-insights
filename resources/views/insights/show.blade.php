@@ -59,7 +59,7 @@
     </a>
     for at få adgang til hele indholdet.
 </div>
-
+<br>
     @endauth
 
     
