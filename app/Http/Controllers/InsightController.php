@@ -10,7 +10,9 @@ class InsightController extends Controller
 {
     public function index()
     {
-        $query = Insight::with('category');
+        $query = Insight::with('category')
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
 
         if ($search = request('search')) {
             $query->where('title', 'like', "%{$search}%")
