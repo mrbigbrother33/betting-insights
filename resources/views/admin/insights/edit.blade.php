@@ -82,7 +82,7 @@
 <div class="mb-4">
     <label for="editor" class="block font-medium mb-1">Indhold</label>
     <textarea id="editor" name="content" class="w-full border border-gray-300 rounded px-3 py-2" rows="10">
-        {{ old('content', $insight->content ?? '') }}
+        {!! old('content', $insight->content ?? '') !!}
     </textarea>
 </div>
 
@@ -114,6 +114,15 @@
                 height: 400,
                 menubar: false,
                 branding: false,
+                force_br_newlines: false,
+                force_p_newlines: true,
+                remove_trailing_brs: true,
+                // Whitelist elementer – blokér div/span/section osv.
+                valid_elements: 'p,strong,em,b,i,ul,ol,li,br,blockquote,h3,h4',
+                invalid_elements: 'div,span,section,article,header,footer,style,script',
+                entity_encoding: 'raw',
+                verify_html: true,             // TinyMCE validerer/renser HTML
+
             });
         });
     </script>

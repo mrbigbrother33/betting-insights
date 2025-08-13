@@ -15,24 +15,30 @@
     @endif
 
     {{-- Indhold --}}
-    <div class="p-4 flex flex-col flex-grow">
-        <h2 class="text-lg font-bold text-indigo-600 hover:underline mb-1">
-            <a href="{{ route('insights.show', $insight) }}">{{ $insight->title }}</a>
-        </h2>
+<div class="p-4 flex flex-col flex-grow gap-3">
+    <h2 class="text-lg font-bold text-indigo-600 hover:underline">
+        <a href="{{ route('insights.show', $insight) }}">{{ $insight->title }}</a>
+    </h2>
 
-        <p class="text-sm text-gray-500 mb-2">
-            {{ $insight->published_at?->format('d. M Y') ?? 'Ikke publiceret' }} – 
-            {{ $insight->category->name ?? 'Ingen kategori' }}
-        </p>
+    <p class="text-sm text-gray-500">
+        {{ $insight->published_at?->format('d. M Y') ?? 'Ikke publiceret' }} –
+        {{ $insight->category->name ?? 'Ingen kategori' }}
+    </p>
 
-        <div class="text-gray-700 text-sm leading-relaxed mb-4 prose prose-sm">
-            {!! Str::limit(strip_tags($insight->content, '<strong><em><b><i><ul><ol><li><br><p>'), 200) !!}
-        </div>
+    @php
+        $allowed = '<strong><em><b><i><ul><ol><li><br><p>';
+        $excerpt = trim(Str::limit(strip_tags($insight->content, $allowed), 200));
+    @endphp
 
-        {{-- Like-knap helt i bunden --}}
-        <div class="mt-auto pt-2">
-            <x-like-button :insight="$insight" />
-        </div>
+    <div class="prose prose-sm text-gray-700 leading-relaxed min-h-[0.75rem]">
+        {!! $excerpt !== '' ? $excerpt : '&nbsp;' !!}
     </div>
+
+    {{-- Like-knap helt i bunden --}}
+    <div class="mt-auto pt-3 border-t border-gray-100">
+        <x-like-button :insight="$insight" />
+    </div>
+</div>
+
 
 </div>
