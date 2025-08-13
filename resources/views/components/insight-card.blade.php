@@ -25,14 +25,18 @@
         {{ $insight->category->name ?? 'Ingen kategori' }}
     </p>
 
-    @php
-        $allowed = '<strong><em><b><i><ul><ol><li><br><p>';
-        $excerpt = trim(Str::limit(strip_tags($insight->content, $allowed), 200));
-    @endphp
+@php
+    $allowed = '<strong><em><b><i><ul><ol><li><br><p>';
+    $clean = strip_tags($insight->content, $allowed);
+    $excerpt = Str::limit($clean, 200);
+    // Luk evt. uafsluttede <strong>/<em> hurtigt
+    $excerpt = preg_replace('/<(strong|em|b|i)(?![^>]*>)/i', '', $excerpt);
+@endphp
 
-    <div class="prose prose-sm text-gray-700 leading-relaxed min-h-[0.75rem]">
-        {!! $excerpt !== '' ? $excerpt : '&nbsp;' !!}
-    </div>
+<div class="prose prose-sm text-gray-700 leading-relaxed min-h-[0.75rem]">
+    {!! $excerpt !== '' ? $excerpt : '&nbsp;' !!}
+</div>
+
 
     {{-- Like-knap helt i bunden --}}
     <div class="mt-auto pt-3 border-t border-gray-100">
