@@ -40,11 +40,11 @@
 
             <div class="prose prose-indigo max-w-none mb-6">
     @auth
-     <div class="prose max-w-none">
+     <div class="prose prose-indigo max-w-none">
     {!! $insight->content !!}
 </div>
     @else
-    <div class="prose max-w-none">
+    <div class="prose prose-indigo max-w-none">
         {!! Str::limit($insight->content, 500) !!}
         </div>        
 
