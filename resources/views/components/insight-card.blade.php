@@ -15,34 +15,25 @@
     @endif
 
     {{-- Indhold --}}
-<div class="p-4 flex flex-col flex-grow gap-3">
-    <h2 class="text-lg font-bold text-indigo-600 hover:underline">
-        <a href="{{ route('insights.show', $insight) }}">{{ $insight->title }}</a>
-    </h2>
+    <div class="p-4 flex flex-col flex-grow gap-3">
+        <h2 class="text-lg font-bold text-indigo-600 hover:underline">
+            <a href="{{ route('insights.show', $insight) }}">{{ $insight->title }}</a>
+        </h2>
 
-    <p class="text-sm text-gray-500">
-        {{ $insight->published_at?->format('d. M Y') ?? 'Ikke publiceret' }} –
-        {{ $insight->category->name ?? 'Ingen kategori' }}
-    </p>
+        <p class="text-sm text-gray-500">
+            {{ $insight->published_at?->format('d. M Y') ?? 'Ikke publiceret' }} –
+            {{ $insight->category->name ?? 'Ingen kategori' }}
+        </p>
 
-@php
-    $allowed = '<strong><em><b><i><ul><ol><li><br><p>';
-    $clean = strip_tags($insight->content, $allowed);
-    $excerpt = Str::limit($clean, 200);
-    // Luk evt. uafsluttede <strong>/<em> hurtigt
-    $excerpt = preg_replace('/<(strong|em|b|i)(?![^>]*>)/i', '', $excerpt);
-@endphp
+         <p class="text-gray-700 text-sm leading-relaxed">
+            {!! html_limit($insight->content, 200) !!}
+        </p>
 
-<div class="prose prose-sm text-gray-700 leading-relaxed min-h-[0.75rem]">
-    {!! $excerpt !== '' ? $excerpt : '&nbsp;' !!}
-</div>
-
-
-    {{-- Like-knap helt i bunden --}}
-    <div class="mt-auto pt-3 border-t border-gray-100">
-        <x-like-button :insight="$insight" />
+        {{-- Like-knap helt i bunden --}}
+        <div class="mt-auto pt-3 border-t border-gray-100">
+            <x-like-button :insight="$insight" />
+        </div>
     </div>
-</div>
 
 
 </div>
