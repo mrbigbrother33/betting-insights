@@ -111,19 +111,13 @@
                 selector: '#editor',
                 plugins: 'link image media code lists',
                 toolbar: 'undo redo | bold italic | bullist numlist | link image media | code',
-                height: 400,
-                menubar: false,
-                branding: false,
-                force_br_newlines: false,
+                forced_root_block: 'p',
                 force_p_newlines: true,
+                force_br_newlines: false,
                 remove_trailing_brs: true,
-                // Whitelist elementer – blokér div/span/section osv.
                 valid_elements: 'p,strong,em,b,i,ul,ol,li,br,blockquote,h3,h4',
                 invalid_elements: 'div,span,section,article,header,footer,style,script',
-                entity_encoding: 'raw',
-                verify_html: true,             // TinyMCE validerer/renser HTML
-
-            });
+                });
         });
     </script>
 @endpush
