@@ -11,6 +11,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminInsightController;
+use App\Http\Controllers\ClickController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::resource('insights', InsightController::class);
@@ -48,3 +49,7 @@ Route::post('/insights/{insight}/like', [LikeController::class, 'toggle'])
 Route::delete('/admin/insights/{insight}/remove-image', [AdminInsightController::class, 'removeImage'])
     ->name('admin.insights.removeImage')
     ->middleware(['auth', 'admin']);
+
+Route::post('/clicks', [ClickController::class, 'store'])
+    ->name('clicks.store')
+    ->middleware('throttle:120,1'); // rate-limit pr. IP
