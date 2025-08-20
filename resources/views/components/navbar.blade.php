@@ -1,6 +1,16 @@
 <nav x-data="{ open: false }" class="bg-white shadow-sm border-b border-gray-200 p-4">
     <div class="flex justify-between items-center max-w-7xl mx-auto">
-        <a href="/" class="text-xl font-bold text-indigo-600 tracking-tight">FriIndsigt</a>
+     <a href="/" class="flex items-center space-x-2 text-indigo-600">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="h-8 w-8" fill="currentColor">
+        <path d="M32 12C18 12 6 24 6 32s12 20 26 20 26-12 26-20S46 12 32 12zm0 32c-6.6 0-12-5.4-12-12s5.4-12 12-12 12 5.4 12 12-5.4 12-12 12z"/>
+        <circle cx="32" cy="32" r="6"/>
+    </svg>
+
+    <span class="text-xl font-bold tracking-tight">
+        FriIndsigt
+    </span>
+</a>
 
         <!-- Desktop nav -->
         <div class="hidden md:flex space-x-6 text-sm font-medium items-center">
