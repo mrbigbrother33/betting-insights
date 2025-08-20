@@ -8,13 +8,26 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Insight;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 class AdminInsightController extends Controller
 {
 
     public function index()
     {
-        $insights = Insight::with('category')->orderByDesc('published_at')->paginate(15);
+        $insights = Insight::with('category')
+            ->leftJoinSub(
+                DB::table('blog_clicks')
+                    ->select('slug', DB::raw('COUNT(*) as click_count'))
+                    ->groupBy('slug'),
+                'clicks',
+                'insights.slug',
+                '=',
+                'clicks.slug'
+            )
+            ->select('insights.*', DB::raw('COALESCE(clicks.click_count, 0) as click_count'))
+            ->orderByDesc('published_at')
+            ->paginate(15);
 
         return view('admin.insights.index', compact('insights'));
     }

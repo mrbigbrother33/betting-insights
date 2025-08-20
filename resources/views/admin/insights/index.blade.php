@@ -16,6 +16,7 @@
                         <th class="px-4 py-3">Titel</th>
                         <th class="px-4 py-3">Kategori</th>
                         <th class="px-4 py-3">Publiceret</th>
+                        <th class="px-4 py-3">Antal klik</th>
                         <th class="px-4 py-3 text-right">Handlinger</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                             <td class="px-4 py-3 text-gray-600">
                                 {{ $insight->published_at?->format('d/m/Y') ?? 'Ikke publiceret' }}
                             </td>
+                             <td>{{ $insight->click_count ?? 0 }}</td>
                             <td class="px-4 py-3 text-right space-x-2">
                                 <a href="{{ route('admin.insights.edit', $insight) }}"
                                    class="text-sm text-indigo-600 hover:underline">Rediger</a>
