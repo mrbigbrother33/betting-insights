@@ -4,7 +4,7 @@
     <div class="max-w-4xl mx-auto px-4">
         <h2 class="text-2xl font-bold text-indigo-700 mb-4">Seneste insights</h2>
         <p class="text-gray-700 mb-8">
-            Her finder du konkrete analyser og erfaringer om investering, betting og trading – med fokus på at bygge strategier, der kan give frihed og overskud.
+            Her finder du konkrete analyser og erfaringer om investering – med fokus på aktier og krypto – og på at bygge strategier, der kan skabe frihed og overskud.
         </p>
 
         <div class="space-y-6">
