@@ -40,4 +40,17 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.edit')->with('success', 'Profil opdateret.');
     }
+
+    public function destroy(Request $request)
+    {
+        $user = $request->user();
+
+        // Log brugeren ud først
+        Auth::logout();
+
+        // Slet bruger
+        $user->delete();
+
+        return redirect('/')->with('success', 'Din konto er blevet fjernet.');
+    }
 }
