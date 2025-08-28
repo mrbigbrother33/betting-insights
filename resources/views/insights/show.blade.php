@@ -49,7 +49,7 @@
         </div>        
 
 <div class="mt-4 bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm p-4 rounded">
-    <p class="font-medium mb-2">Vil du læse hele indlægget?</p>
+    <p class="font-medium mb-2 mt-0">Vil du læse hele indlægget?</p>
     <a href="{{ route('register') }}" class="inline-block text-indigo-600 underline hover:text-indigo-800">
         Opret en gratis bruger
     </a>
@@ -59,6 +59,7 @@
     </a>
     for at få adgang til hele indholdet.
 </div>
+
 <br>
     @endauth
 
