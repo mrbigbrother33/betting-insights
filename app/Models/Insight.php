@@ -19,6 +19,7 @@ class Insight extends Model
         'published_at',
         'affiliate_url',
         'image_url',
+        'is_public',
     ];
 
     protected $casts = [

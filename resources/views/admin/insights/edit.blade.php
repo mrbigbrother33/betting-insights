@@ -77,6 +77,11 @@
                        class="w-full px-3 py-2 border border-gray-300 bg-white rounded shadow-sm text-sm">
                 @error('image') <p class="text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
+
+                        <label class="flex items-center gap-2">
+                        <input type="checkbox" name="is_public" value="1" {{ old('is_public', $insight->is_public) ? 'checked' : '' }}>
+                        Gør indlæg offentligt
+                    </label>
 <div>
 
 <div class="mb-4">

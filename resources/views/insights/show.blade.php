@@ -39,7 +39,7 @@
             </p>
 
             <div class="prose prose-indigo max-w-none mb-6">
-    @auth
+    @if (auth()->check() || $insight->is_public)
      <div class="prose prose-indigo max-w-none">
     {!! $insight->content !!}
 </div>

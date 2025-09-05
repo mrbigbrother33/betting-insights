@@ -95,6 +95,7 @@ class AdminInsightController extends Controller
             'published_at'  => 'nullable|date',
             'image'         => 'nullable|image|max:5120',
             'affiliate_url' => 'nullable|url',
+            'is_public' => 'boolean',
         ], [
             'title.required'         => 'Titel er påkrævet.',
             'title.max'              => 'Titlen må højst være 255 tegn.',

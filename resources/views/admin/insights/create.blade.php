@@ -49,6 +49,7 @@
 
             <x-input label="Publiceringsdato" name="published_at" type="date" :value="old('published_at')" />
 
+
             <button type="submit"
                 class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-500 transition">
                 Gem Insight
