@@ -11,6 +11,10 @@
     <title>{{ $title ?? 'Insights' }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ $metaTitle ?? $title ?? 'FriIndsigt' }}</title>
+    <meta name="description" content="{{ $metaDescription ?? 'FriIndsigt – Indsigter om investering, økonomi og strategi.' }}">
+    <meta name="keywords" content="{{ $metaKeywords ?? 'investering, aktier, økonomi, frihed, strategi' }}">
+    <meta name="robots" content="index, follow">
     <!-- Open Graph -->
 <meta property="og:title" content="{{ $metaTitle ?? $title ?? config('app.name') }}" />
 <meta property="og:description" content="{{ $metaDescription ?? 'Læs indsigtsfulde artikler om investering, frihed og personlig udvikling.' }}" />
