@@ -13,14 +13,13 @@ class ClickController extends Controller
             'slug' => 'required|string|max:255',
         ]);
 
-        DB::table('blog_clicks')->insert([
+        DB::table('blog_clicks')->insertOrIgnore([
             'slug'       => $data['slug'],
+            'ip'         => $request->ip(),              // automatisk IP
             'clicked_at' => now(),
-            // (valgfrit) ekstra signaler:
-            // 'ip'         => $request->ip(),
-            // 'ua'         => substr($request->userAgent() ?? '', 0, 255),
+            'visited_on' => now()->toDateString(),       // dato
         ]);
 
-        return response()->noContent(); // 204
+        return response()->noContent();
     }
 }

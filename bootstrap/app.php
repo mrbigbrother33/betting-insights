@@ -13,6 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'track.daily' => \App\Http\Middleware\TrackDailyVisit::class,
+        ]);
+
+        $middleware->web(append: [
+            \App\Http\Middleware\TrackDailyVisit::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
