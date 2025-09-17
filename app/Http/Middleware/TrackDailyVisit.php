@@ -14,6 +14,13 @@ class TrackDailyVisit
         if ($request->method() === 'GET' && !$request->ajax()) {
             $ip = $request->ip();
 
+            logger()->info('visit-ip-debug', [
+                'seen_ip' => $request->ip(),
+                'exclude' => config('analytics.exclude_ips', []),
+                'xff'     => $request->headers->get('x-forwarded-for'),
+                'cf'      => $request->headers->get('cf-connecting-ip'),
+            ]);
+
             // Spring over egne IP'er
             $exclude = config('analytics.exclude_ips', []);
             if (!in_array($ip, $exclude, true)) {
