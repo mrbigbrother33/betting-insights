@@ -9,6 +9,15 @@
             </a>
         </div>
 
+        <div class="mb-6 p-4 bg-white border border-gray-200 rounded-lg">
+    <h2 class="text-sm font-semibold text-gray-700">Forside-visninger</h2>
+    <p class="text-gray-600 mt-1">
+        I dag: <span class="font-bold">{{ $homeToday }}</span> ·
+        I alt: <span class="font-bold">{{ $homeTotal }}</span>
+    </p>
+</div>
+
+
         <div class="bg-white border border-gray-200 shadow-sm rounded overflow-x-auto">
             <table class="min-w-full table-auto text-sm">
                 <thead class="bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase">

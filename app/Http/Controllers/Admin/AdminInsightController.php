@@ -15,6 +15,18 @@ class AdminInsightController extends Controller
 
     public function index()
     {
+        // 1) Stats for forsiden (slug __home__)
+        $today = now()->toDateString();
+
+        $homeStats = DB::table('blog_clicks')
+            ->selectRaw("
+            SUM(CASE WHEN COALESCE(visited_on, DATE(clicked_at)) = ? THEN 1 ELSE 0 END) as today,
+            COUNT(*) as total
+        ", [$today])
+            ->where('slug', '__home__')   // <- justér hvis du bruger en anden nøgle
+            ->first();
+
+        // 2) Dine eksisterende insight-rækker + total clicks pr. slug
         $insights = Insight::with('category')
             ->leftJoinSub(
                 DB::table('blog_clicks')
@@ -29,7 +41,11 @@ class AdminInsightController extends Controller
             ->orderByDesc('published_at')
             ->paginate(15);
 
-        return view('admin.insights.index', compact('insights'));
+        return view('admin.insights.index', [
+            'insights'  => $insights,
+            'homeToday' => (int) ($homeStats->today ?? 0),
+            'homeTotal' => (int) ($homeStats->total ?? 0),
+        ]);
     }
 
     public function create()
